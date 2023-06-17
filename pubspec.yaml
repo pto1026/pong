@@ -8,8 +8,10 @@ environment:
 
 dependencies:
   flame: ^1.8.0
+  flame_svg: ^1.7.4
   flutter:
     sdk: flutter
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
