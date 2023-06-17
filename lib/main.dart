@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,23 +22,40 @@ class MainApp extends FlameGame with SingleGameInstance {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-
+    images.loadAll(['black_padle.png', 'white_padle.png']);
     world = World();
     await add(world);
     cameraComponent = CameraComponent(world: world);
     await add(cameraComponent);
-    world.add(SpriteThing());
+    world.add(BlackPaddle());
+    world.add(WhitePaddle());
   }
+
+  @override
+  Color backgroundColor() => Colors.white54;
 }
 
-class SpriteThing extends PositionComponent with HasGameRef<MainApp> {
+class BlackPaddle extends SpriteComponent with HasGameRef<MainApp>, ParentIsA<World> {
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    size = Vector2(100, 100);
-    position = Vector2(game.cameraComponent.viewfinder.anchor.x,
-        game.cameraComponent.viewfinder.anchor.y);
-    anchor = Anchor.center;
+    size = Vector2(64, 64);
+    position = Vector2(Get.width / 2, Get.height);
+    anchor = Anchor.bottomCenter;
+    sprite = Sprite(await game.images.load('black_padle.png'));
+  }
+}
+
+class WhitePaddle extends SpriteComponent with HasGameRef<MainApp>, ParentIsA<World> {
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    size = Vector2(64, 64);
+    position = Vector2(Get.width / 2, 0);
+    anchor = Anchor.bottomCenter;
+    angle = pi;
+    sprite = Sprite(await game.images.load('white_padle.png'));
   }
 }
