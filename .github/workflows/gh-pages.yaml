@@ -15,3 +15,4 @@ jobs:
         with:
           baseHref: /pong/
           webRenderer: canvaskit
+          workingDir: ./build/web/
